@@ -1,4 +1,6 @@
-*.dart linguist-language=Dart
-*.yaml linguist-language=YAML
-*.gradle linguist-language=Groovy
-*.sh linguist-language=Shell
+*.dart linguist-detectable=true  
+*.java linguist-detectable=false  
+*.js linguist-detectable=false  
+*.html linguist-detectable=false  
+*.xml linguist-detectable=false
+*.c++ linguist-detectable=false
