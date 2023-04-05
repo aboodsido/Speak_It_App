@@ -1,0 +1,4 @@
+*.dart linguist-language=Dart
+*.yaml linguist-language=YAML
+*.gradle linguist-language=Groovy
+*.sh linguist-language=Shell
