@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:translator/translator.dart';
 import 'package:text_to_speech/text_to_speech.dart';
 import 'package:provider/provider.dart';
 import 'model_theme.dart';
@@ -14,6 +15,8 @@ class SpeakIt extends StatefulWidget {
 class _SpeakItState extends State<SpeakIt> {
   final _textToSpeech = TextToSpeech();
   final _textEditingController = TextEditingController();
+  final _translator = GoogleTranslator();
+  var translatedText;
 
   double _volume = 0.5;
   double _rate = 0.7;
@@ -29,10 +32,8 @@ class _SpeakItState extends State<SpeakIt> {
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
         backgroundColor: themeNotifier.isDark ? null : _color1,
-        //rgb(227, 204, 174)
         appBar: AppBar(
             backgroundColor: _color2,
-            //rgb(184, 98, 27)
             title: Text(
               'Speak It App',
               style: GoogleFonts.aBeeZee(
@@ -196,59 +197,47 @@ class _SpeakItState extends State<SpeakIt> {
                       },
                       buttonText: 'Set Default'),
                 ],
-              )
+              ),
+              const SizedBox(height: 20),
+              buildElevatedButton(
+                  themeNotifier: themeNotifier,
+                  onPressed: () async {
+                    translatedText = await _translator.translate(
+                        _textEditingController.text,
+                        from: 'auto',
+                        to: 'ar');
+                    setState(() {});
+                    // print("the translated text is : $translatedText");
+                  },
+                  buttonText: "Translate to Arabic"),
+              const SizedBox(height: 15),
+              Container(
+                width: double.infinity,
+                height: 200,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        width: 1,
+                        color: themeNotifier.isDark ? _color1 : _color3)),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      translatedText != null ? translatedText.text : '',
+                      textDirection: TextDirection.rtl,
+                      style: GoogleFonts.cairo(
+                          fontSize: 15,
+                          color: themeNotifier.isDark ? _color1 : _color3),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       );
     });
   }
-
-  //Slider Row Widget
-/*
-  Widget biuldSliderRow({
-    required ModelTheme themeNotifier,
-    required String rowTitle,
-    required double maxSliderVal,
-    required double sliderVal,
-  }) {
-    return Row(
-      children: [
-        Text(
-          rowTitle,
-          style: GoogleFonts.aBeeZee(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: themeNotifier.isDark
-                  ? const Color.fromRGBO(227, 204, 174, 1)
-                  : const Color.fromRGBO(38, 42, 86, 1)),
-        ),
-        Expanded(
-          child: Slider(
-              inactiveColor: const Color.fromRGBO(184, 98, 27, 0.5),
-              activeColor: const Color.fromRGBO(184, 98, 27, 1),
-              max: maxSliderVal,
-              value: sliderVal,
-              onChanged: (newVal) {
-                setState(() {
-                  sliderVal = newVal;
-                });
-              }),
-        ),
-        Text(
-          sliderVal.toStringAsFixed(2),
-          style: GoogleFonts.aBeeZee(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: themeNotifier.isDark
-                  ? const Color.fromRGBO(227, 204, 174, 1)
-                  : const Color.fromRGBO(38, 42, 86, 1)),
-        ),
-      ],
-    );
-  }
-
- */
 
   Widget buildElevatedButton(
       {required ModelTheme themeNotifier,
