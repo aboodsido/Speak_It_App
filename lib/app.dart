@@ -180,69 +180,33 @@ class _SpeakItState extends State<SpeakIt> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
-                    onPressed: () async {
-                      await _textToSpeech.setVolume(_volume);
-                      await _textToSpeech.setRate(_rate);
-                      await _textToSpeech.setPitch(_pitch);
-                      await _textToSpeech.speak(_textEditingController.text);
-                    },
-                    child: Text(
-                      'Speak',
-                      style: GoogleFonts.aBeeZee(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: themeNotifier.isDark
-                              ? const Color.fromRGBO(124, 61, 11, 1.0)
-                              : const Color.fromRGBO(227, 204, 174, 1)),
-                    ),
-                  ),
+                  buildElevatedButton(
+                      themeNotifier: themeNotifier,
+                      onPressed: () async {
+                        await _textToSpeech.setVolume(_volume);
+                        await _textToSpeech.setRate(_rate);
+                        await _textToSpeech.setPitch(_pitch);
+                        await _textToSpeech.speak(_textEditingController.text);
+                      },
+                      buttonText: 'Speak'),
                   const SizedBox(width: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
-                    onPressed: () async {
-                      await _textToSpeech.stop();
-                    },
-                    child: Text(
-                      'Stop',
-                      style: GoogleFonts.aBeeZee(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: themeNotifier.isDark
-                              ? const Color.fromRGBO(124, 61, 11, 1.0)
-                              : const Color.fromRGBO(227, 204, 174, 1)),
-                    ),
-                  ),
+                  buildElevatedButton(
+                      themeNotifier: themeNotifier,
+                      onPressed: () async {
+                        await _textToSpeech.stop();
+                      },
+                      buttonText: 'Stop'),
                   const SizedBox(width: 20),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
-                    onPressed: () {
-                      setState(() {
-                        _volume = 0.5;
-                        _rate = 0.7;
-                        _pitch = 1;
-                      });
-                    },
-                    child: Text(
-                      'Set Default',
-                      style: GoogleFonts.aBeeZee(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: themeNotifier.isDark
-                              ? const Color.fromRGBO(124, 61, 11, 1.0)
-                              : const Color.fromRGBO(227, 204, 174, 1)),
-                    ),
-                  ),
+                  buildElevatedButton(
+                      themeNotifier: themeNotifier,
+                      onPressed: () {
+                        setState(() {
+                          _volume = 0.5;
+                          _rate = 0.7;
+                          _pitch = 1;
+                        });
+                      },
+                      buttonText: 'Set Default'),
                 ],
               )
             ],
@@ -250,5 +214,74 @@ class _SpeakItState extends State<SpeakIt> {
         ),
       );
     });
+  }
+
+
+  //Slider Row Widget
+/*
+  Widget biuldSliderRow({
+    required ModelTheme themeNotifier,
+    required String rowTitle,
+    required double maxSliderVal,
+    required double sliderVal,
+  }) {
+    return Row(
+      children: [
+        Text(
+          rowTitle,
+          style: GoogleFonts.aBeeZee(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: themeNotifier.isDark
+                  ? const Color.fromRGBO(227, 204, 174, 1)
+                  : const Color.fromRGBO(38, 42, 86, 1)),
+        ),
+        Expanded(
+          child: Slider(
+              inactiveColor: const Color.fromRGBO(184, 98, 27, 0.5),
+              activeColor: const Color.fromRGBO(184, 98, 27, 1),
+              max: maxSliderVal,
+              value: sliderVal,
+              onChanged: (newVal) {
+                setState(() {
+                  sliderVal = newVal;
+                });
+              }),
+        ),
+        Text(
+          sliderVal.toStringAsFixed(2),
+          style: GoogleFonts.aBeeZee(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: themeNotifier.isDark
+                  ? const Color.fromRGBO(227, 204, 174, 1)
+                  : const Color.fromRGBO(38, 42, 86, 1)),
+        ),
+      ],
+    );
+  }
+
+ */
+
+  Widget buildElevatedButton(
+      {required ModelTheme themeNotifier,
+      required VoidCallback onPressed,
+      required String buttonText}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: themeNotifier.isDark
+              ? const Color.fromRGBO(227, 204, 174, 1)
+              : const Color.fromRGBO(38, 42, 86, 1)),
+      onPressed: onPressed,
+      child: Text(
+        buttonText,
+        style: GoogleFonts.aBeeZee(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+            color: themeNotifier.isDark
+                ? const Color.fromRGBO(124, 61, 11, 1.0)
+                : const Color.fromRGBO(227, 204, 174, 1)),
+      ),
+    );
   }
 }
