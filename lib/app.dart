@@ -12,23 +12,26 @@ class SpeakIt extends StatefulWidget {
 }
 
 class _SpeakItState extends State<SpeakIt> {
-  final TextToSpeech _textToSpeech = TextToSpeech();
-  final TextEditingController _textEditingController = TextEditingController();
+  final _textToSpeech = TextToSpeech();
+  final _textEditingController = TextEditingController();
+
   double _volume = 0.5;
   double _rate = 0.7;
   double _pitch = 1;
+
+  final _color1 = const Color.fromRGBO(227, 204, 174, 1);
+  final _color2 = const Color.fromRGBO(184, 98, 27, 1);
+  final _color3 = const Color.fromRGBO(38, 42, 86, 1);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ModelTheme>(
         builder: (context, ModelTheme themeNotifier, child) {
       return Scaffold(
-        backgroundColor: themeNotifier.isDark
-            ? null
-            : const Color.fromRGBO(227, 204, 174, 1),
+        backgroundColor: themeNotifier.isDark ? null : _color1,
         //rgb(227, 204, 174)
         appBar: AppBar(
-            backgroundColor: const Color.fromRGBO(184, 98, 27, 1),
+            backgroundColor: _color2,
             //rgb(184, 98, 27)
             title: Text(
               'Speak It App',
@@ -57,15 +60,12 @@ class _SpeakItState extends State<SpeakIt> {
                   style: GoogleFonts.aBeeZee(
                       fontWeight: FontWeight.w400,
                       fontSize: 15,
-                      color: themeNotifier.isDark
-                          ? const Color.fromRGBO(227, 204, 174, 1)
-                          : const Color.fromRGBO(38, 42, 86, 1)),
-                  cursorColor: const Color.fromRGBO(184, 98, 27, 1),
+                      color: themeNotifier.isDark ? _color1 : _color3),
+                  cursorColor: _color2,
                   maxLines: 7,
                   decoration: InputDecoration(
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Color.fromRGBO(184, 98, 27, 1), width: 2.0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: _color2, width: 2.0),
                       ),
                       border: const OutlineInputBorder(),
                       hintText: 'Enter your text here..',
@@ -81,14 +81,12 @@ class _SpeakItState extends State<SpeakIt> {
                     style: GoogleFonts.aBeeZee(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
+                        color: themeNotifier.isDark ? _color1 : _color3),
                   ),
                   Expanded(
                     child: Slider(
                         inactiveColor: const Color.fromRGBO(184, 98, 27, 0.5),
-                        activeColor: const Color.fromRGBO(184, 98, 27, 1),
+                        activeColor: _color2,
                         max: 1,
                         value: _volume,
                         onChanged: (newVal) {
@@ -102,9 +100,7 @@ class _SpeakItState extends State<SpeakIt> {
                     style: GoogleFonts.aBeeZee(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
+                        color: themeNotifier.isDark ? _color1 : _color3),
                   ),
                 ],
               ),
@@ -115,14 +111,12 @@ class _SpeakItState extends State<SpeakIt> {
                     style: GoogleFonts.aBeeZee(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
+                        color: themeNotifier.isDark ? _color1 : _color3),
                   ),
                   Expanded(
                     child: Slider(
                         inactiveColor: const Color.fromRGBO(184, 98, 27, 0.5),
-                        activeColor: const Color.fromRGBO(184, 98, 27, 1),
+                        activeColor: _color2,
                         max: 2,
                         value: _rate,
                         onChanged: (newVal) {
@@ -136,9 +130,7 @@ class _SpeakItState extends State<SpeakIt> {
                     style: GoogleFonts.aBeeZee(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
+                        color: themeNotifier.isDark ? _color1 : _color3),
                   ),
                 ],
               ),
@@ -149,14 +141,12 @@ class _SpeakItState extends State<SpeakIt> {
                     style: GoogleFonts.aBeeZee(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
+                        color: themeNotifier.isDark ? _color1 : _color3),
                   ),
                   Expanded(
                     child: Slider(
                         inactiveColor: const Color.fromRGBO(184, 98, 27, 0.5),
-                        activeColor: const Color.fromRGBO(184, 98, 27, 1),
+                        activeColor: _color2,
                         max: 2,
                         value: _pitch,
                         onChanged: (newVal) {
@@ -170,9 +160,7 @@ class _SpeakItState extends State<SpeakIt> {
                     style: GoogleFonts.aBeeZee(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: themeNotifier.isDark
-                            ? const Color.fromRGBO(227, 204, 174, 1)
-                            : const Color.fromRGBO(38, 42, 86, 1)),
+                        color: themeNotifier.isDark ? _color1 : _color3),
                   ),
                 ],
               ),
@@ -215,7 +203,6 @@ class _SpeakItState extends State<SpeakIt> {
       );
     });
   }
-
 
   //Slider Row Widget
 /*
@@ -269,9 +256,7 @@ class _SpeakItState extends State<SpeakIt> {
       required String buttonText}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          backgroundColor: themeNotifier.isDark
-              ? const Color.fromRGBO(227, 204, 174, 1)
-              : const Color.fromRGBO(38, 42, 86, 1)),
+          backgroundColor: themeNotifier.isDark ? _color1 : _color3),
       onPressed: onPressed,
       child: Text(
         buttonText,
@@ -280,7 +265,7 @@ class _SpeakItState extends State<SpeakIt> {
             fontSize: 15,
             color: themeNotifier.isDark
                 ? const Color.fromRGBO(124, 61, 11, 1.0)
-                : const Color.fromRGBO(227, 204, 174, 1)),
+                : _color1),
       ),
     );
   }

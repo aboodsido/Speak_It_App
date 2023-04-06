@@ -21,7 +21,12 @@ class MyApp extends StatelessWidget {
               : ThemeData(brightness: Brightness.light),
           themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
-          home: const SpeakIt(),
+          home: AnimatedTheme(
+            curve: Curves.ease,
+            data: themeNotifier.isDark ? ThemeData.dark() : ThemeData.light(),
+            duration: const Duration(milliseconds: 590),
+            child: const SpeakIt(),
+          ),
         );
       }),
     );
